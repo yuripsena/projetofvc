@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <title>Cadastro de Cidades</title>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Menu lateral -->
+        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+            <div class="position-sticky" style="height: 100vh;"> <!-- Defina a altura como 100% da altura da visualização (viewport) -->
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/veiculo/new}">Cadastrar Veículo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/usuario/new}">Cadastrar Usuário</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+<div class="container">
+    <div class="text-center my-5">
+        <h2>Cadastro de Cidades</h2>
+    </div>
+    <div class="mb-4 text-center">
+        <a class="btn btn-success" th:href="@{/cidade/new}">Adicionar Nova Cidade</a>
+    </div>
+    <div th:if="${message}" class="alert alert-success text-center">
+        [[${message}]]
+    </div>
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Nome da Cidade</th>
+            <th>UF</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="cidade : ${listCidade}">
+            <td>[[${cidade.getId()}]]</td>
+            <td>[[${cidade.getNomeCidade()}]]</td>
+            <td>[[${cidade.getUf()}]]</td>
+            <td>
+                <a class="btn btn-primary btn-sm mr-2" th:href="@{'/cidade/edit/' + ${cidade.getId()}}">Editar</a>
+                <a class="btn btn-danger btn-sm" th:href="@{'/cidade/delete/' + ${cidade.getId()}}">Deletar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <form method="post" th:action="@{/cidade/search}" class="mt-4">
+        <div class="input-group">
+            <input type="text" name="searchNomeCidade" class="form-control" placeholder="Procurar pela cidade">
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">Procurar</button>
+            </div>
+        </div>
+    </form>
+
+    <button type="button" class="btn btn-secondary m-2" onclick="cancelForm()">Voltar</button>
+
+</div>
+    </div>
+        <script>
+            function cancelForm(){
+           window.location = "[[@{/}]]"
+        }
+        </script>
+
+</body>
+</html>

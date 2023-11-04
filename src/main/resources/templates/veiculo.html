@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Veiculo</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container-fluid text-center">
+    <div><h2>Cadastro Veiculo</h2></div>
+    <div class="m-2">
+        <a class="h3"  th:href="@{/veiculo/new}">Adicionar novo veiculo</a>
+    </div>
+    <div th:if="${messagee}" class="alert alert-success text-center">
+        [[${messagee}]]
+    </div>
+    <div>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>NÚMERO</th>
+                    <th>MOTORISTA</th>
+                    <th>PLACA</th>
+                    <th>MODELO</th>
+                    <th>DATA DA COMPRA</th>
+                    <th>QTD POLTRONAS</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="veiculo : ${listVeiculos}">
+                <tr>
+                    <td>[[${veiculo.getId()}]]</td>
+                    <td>[[${veiculo.getNumero()}]]</td>
+                    <td>[[${veiculo.getMotorista()}]]</td>
+                    <td>[[${veiculo.getPlaca()}]]</td>
+                    <td>[[${veiculo.getModelo()}]]</td>
+                    <td>[[${veiculo.getDataCompra()}]]</td>
+                    <td>[[${veiculo.getQtdPoltrnas()}]]</td>
+                    <td>
+                        <a class="h4 mr-3" th:href="@{'/veiculo/edit/' + ${veiculo.getId}}">Editar</a>
+                        <a class="h4" th:href="@{'/veiculo/delete/' + ${veiculo.getId}}">Deletar</a>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+    <form method="post" th:action="@{/veiculo/search}">
+        <div class="form-group">
+            <input type="text" name="searchNumero" placeholder="Procurar pelo número">
+            <button type="submit" class="btn btn-primary">Procurar</button>
+        </div>
+    </form>
+
+    <button type="button" class="btn btn-secondary m-2" onclick="cancelForm()">Voltar</button>
+</div>
+
+<script>
+    function cancelForm(){
+   window.location = "[[@{/}]]"
+}
+</script>
+
+</body>
+</html>

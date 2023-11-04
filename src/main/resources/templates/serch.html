@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Procurar</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+
+<h1>Resultado da Pesquisa de Usuário</h1>
+
+<form action="/users/search" method="get">
+    <label for="nome">Pesquisar por Nome:</label>
+    <input type="text" id="nome" name="nome" required>
+    <button type="submit">Pesquisar</button>
+</form>
+
+<div>
+    <h2>Usuário Encontrado:</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Login</th>
+            <th>Email</th>
+            <th>Cargo</th>
+        </tr>
+        <tr th:if="${user != null}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.nome}"></td>
+            <td th:text="${user.login}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.cargo}"></td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>

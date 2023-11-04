@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>[[${pageTitle}]]</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+</head>
+<body>
+
+<div class="container-fluid">
+
+    <div class="text-center"><h2>[[${pageTitle}]]</h2></div>
+
+    <form th:action="@{/passagem/save}" method="post" th:object="${passagem}"
+          style="max-width:500px; margin: 0 auto;">
+        <div class="border border-secondary rounded p-3">
+            <div class="form-group row">
+
+                <label class="col-sm4 col-form-label">Veiculo</label>
+                <div class="col-sm-8">
+                    <select class="form-control" th:field="*{veiculo.id}">
+                        <option th:each="veiculo : ${veiculos}" th:value="${veiculo.id}" th:text="${veiculo.modelo}"></option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="form-group row">
+
+                <label class="col-sm4 col-form-label">Poltrona</label>
+                <div class="col-sm-8">
+                    <input type="number" th:field="*{poltrona}" class="form-control">
+                </div>
+
+            </div>
+
+            <div class="form-group row">
+
+                <label class="col-sm4 col-form-label">Data Saida</label>
+                <div class="col-sm-8">
+                    <input type="text" th:field="*{dataSaida}" class="form-control" id="dataSaidaPicker" placeholder="dd-MM-yyyy" pattern="\d{2}-\d{2}-\d{4}">
+                </div>
+
+            </div>
+
+            <div class="form-group row">
+
+                <label class="col-sm4 col-form-label">Hora Saida</label>
+                <div class="col-sm-8">
+                    <input type="text" th:field="*{horaSaida}" class="form-control" id="horaSaidaPicker" placeholder="dd-MMM-yyyy HH:mm" />
+                </div>
+
+            </div>
+            <div class="form-group row">
+
+                <label class="col-sm4 col-form-label">Cidade Destino</label>
+                <div class="col-sm-8">
+                    <select class="form-control" th:field="*{cidadeDestino.id}">
+                        <option th:each="cidade : ${cidades}" th:value="${cidade.id}" th:text="${cidade.nomeCidade}"></option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="form-group row">
+
+                <label class="col-sm4 col-form-label">Cidade Origem</label>
+                <div class="col-sm-8">
+                    <select class="form-control" th:field="*{cidadeOrigem.id}">
+                        <option th:each="cidade : ${cidades}" th:value="${cidade.id}" th:text="${cidade.nomeCidade}"></option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="form-group row">
+
+                <label class="col-sm4 col-form-label">Valor Passagem</label>
+                <div class="col-sm-8">
+                    <input type="text" th:field="*{valorPassagem}" class="form-control">
+                </div>
+
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary m-2">Salvar</button>
+                <button type="button" class="btn btn-secondary m-2" onclick="cancelForm()">Cancelar</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+
+    function cancelForm(){
+       window.location = "[[@{/passagem}]]"
+    }
+</script>
+
+
+</body>
+</html>

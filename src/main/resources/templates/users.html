@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <title>Usuário</title>
+</head>
+<body>
+<div class="container-fluid text-center">
+    <div><h2>Cadastro Usuário</h2></div>
+    <div class="m-2">
+        <a class="h3"  th:href="@{/users/new}">Adicionar novo usuário</a>
+    </div>
+    <div th:if="${message}" class="alert alert-success text-center">
+        [[${message}]]
+    </div>
+    <div>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>NOME</th>
+                    <th>LOGIN</th>
+                    <th>SENHA</th>
+                    <th>EMAIL</th>
+                    <th>CARGO</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="users : ${listUsers}">
+                <tr>
+                    <td>[[${users.getId()}]]</td>
+                    <td>[[${users.getNome()}]]</td>
+                    <td>[[${users.getLogin()}]]</td>
+                    <td>[[${users.getSenha()}]]</td>
+                    <td>[[${users.getEmail()}]]</td>
+                    <td>[[${users.getCargo()}]]</td>
+                    <td>
+                        <a class="h4 mr-3" th:href="@{'/users/edit/' + ${users.getId}}">Editar</a>
+                        <a class="h4" th:href="@{'/users/delete/' + ${users.getId}}">Deletar</a>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+    <form method="post" th:action="@{/users/search}">
+        <div class="form-group">
+            <input type="text" name="searchName" placeholder="Procurar pelo nome">
+            <button type="submit" class="btn btn-primary">Procurar</button>
+        </div>
+    </form>
+
+    <button type="button" class="btn btn-secondary m-2" onclick="cancelForm()">Voltar</button>
+</div>
+
+<script>
+    function cancelForm(){
+   window.location = "[[@{/}]]"
+}
+</script>
+
+</body>
+</html>

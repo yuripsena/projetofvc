@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Passagem</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+
+<div class="container-fluid text-center">
+    <div><h2>Cadastro Passagem</h2></div>
+    <div class="m-2">
+        <a class="h3"  th:href="@{/passagem/new}">Adicionar nova passagem</a>
+    </div>
+    <div th:if="${message}" class="alert alert-success text-center">
+        [[${message}]]
+    </div>
+    <div>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>VEICULO</th>
+                <th>POLTRONA</th>
+                <th>DATA SAIDA</th>
+                <th>HORA SAIDA</th>
+                <th>CIDADE DESTINO</th>
+                <th>CIDADE ORIGEM</th>
+                <th>VALOR PASSAGEM</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="passagem : ${listPassagem}">
+                <tr>
+                    <td>[[${users.getIdPassagem()}]]</td>
+                    <td>[[${users.getVeiculo()}]]</td>
+                    <td>[[${users.getPoltrona()}]]</td>
+                    <td>[[${users.getDataSaida()}]]</td>
+                    <td>[[${users.getHoraSaida()}]]</td>
+                    <td>[[${users.getCidadeDestino()}]]</td>
+                    <td>[[${users.getCidadeOrigem()}]]</td>
+                    <td>[[${users.getValorPassagem()}]]</td>
+                    <td>
+                        <a class="h4 mr-3" th:href="@{'/passagem/edit/' + ${passagem.getIdPassagem}}">Editar</a>
+                        <a class="h4" th:href="@{'/passagem/delete/' + ${passagem.getIdPassagem}}">Deletar</a>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+
+    </div>
+    <button type="button" class="btn btn-secondary m-2" onclick="cancelForm()">Voltar</button>
+</div>
+
+    <script>
+        function cancelForm(){
+       window.location = "[[@{/}]]"
+    }
+    </script>
+</body>
+</html>

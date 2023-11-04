@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <title>Home</title>
+    <!-- Adicione seu próprio arquivo de CSS personalizado aqui, se necessário -->
+    <!-- <link rel="stylesheet" type="text/css" href="seu-arquivo-de-css.css"> -->
+</head>
+<body>
+<div class="container">
+    <div class="text-center mt-5">
+        <h1 class="display-4">Bem vindo!</h1>
+    </div>
+    <div class="row justify-content-center mt-4">
+        <div class="col-12 col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <a class="h2 card-title" th:href="@{/users}">Usuário</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <a class="h2 card-title" th:href="@{/veiculo}">Veiculo</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-4">
+        <div class="col-12 col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <a class="h2 card-title" th:href="@{/cidade}">Cidade</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <a class="h2 card-title" th:href="@{/passagem}">Passagem</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
