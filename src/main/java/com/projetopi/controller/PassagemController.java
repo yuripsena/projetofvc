@@ -4,10 +4,12 @@ import com.projetopi.entidades.*;
 import com.projetopi.services.CidadeService;
 import com.projetopi.services.PassagemService;
 import com.projetopi.services.VeiculoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -61,8 +63,23 @@ public class PassagemController {
     }
 
     @PostMapping("/passagem/save")
-    public String savePassagem(Passagem passagem, RedirectAttributes ra) {
-        // Set the foreign keys (veiculo, cidadeOrigem, cidadeDestino) based on passagem's attributes
+    public String savePassagem(@Valid Passagem passagem, Errors errors, RedirectAttributes ra) throws VeiculoNotFoundException {
+        if (errors.hasErrors()) {
+            return "passagem_form";
+        }
+
+        Veiculo veiculo = veiculoService.get(passagem.getVeiculo().getId());
+
+        if (passagem.getPoltrona() <= 0 || passagem.getPoltrona() > veiculo.getQtdPoltrnas()) {
+            ra.addFlashAttribute("message", "Número de poltrona inválido");
+            return "redirect:/passagem/new";
+        }
+
+        if (passagem.getCidadeOrigem().equals(passagem.getCidadeDestino())) {
+            ra.addFlashAttribute("message", "Cidade de origem e destino não podem ser iguais");
+            return "redirect:/passagem/new";
+        }
+
         passagemService.save(passagem);
         ra.addFlashAttribute("message", "A passagem foi cadastrada com sucesso.");
         return "redirect:/passagem";
