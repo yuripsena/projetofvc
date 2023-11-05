@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:js="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>[[${pageTitle}]]</title>
@@ -18,9 +18,9 @@
         <div class="border border-secondary rounded p-3">
             <div class="form-group row">
 
-                <label class="col-sm4 col-form-label">Veiculo</label>
+                <label class="col-sm-4 col-form-label">Veiculo</label>
                 <div class="col-sm-8">
-                    <select class="form-control" th:field="*{veiculo.id}">
+                    <select class="form-control" th:field="*{veiculo.id}" id="veiculoSelect">
                         <option th:each="veiculo : ${veiculos}" th:value="${veiculo.id}" th:text="${veiculo.modelo}"></option>
                     </select>
                 </div>
@@ -28,35 +28,35 @@
             </div>
             <div class="form-group row">
 
-                <label class="col-sm4 col-form-label">Poltrona</label>
+                <label class="col-sm-4 col-form-label">Poltrona</label>
                 <div class="col-sm-8">
-                    <input type="number" th:field="*{poltrona}" class="form-control">
+                    <input type="number" th:field="*{poltrona}" class="form-control" id="poltronaInput" min="1" step="1">
                 </div>
 
             </div>
 
             <div class="form-group row">
 
-                <label class="col-sm4 col-form-label">Data Saida</label>
+                <label class="col-sm-4 col-form-label">Data Saida</label>
                 <div class="col-sm-8">
-                    <input type="text" th:field="*{dataSaida}" class="form-control" id="dataSaidaPicker" placeholder="dd-MM-yyyy" pattern="\d{2}-\d{2}-\d{4}">
+                    <input type="text" th:field="*{dataSaida}" class="form-control" id="dataSaidaPicker" placeholder="dd-MM-yyyy" />
                 </div>
 
             </div>
 
             <div class="form-group row">
 
-                <label class="col-sm4 col-form-label">Hora Saida</label>
+                <label class="col-sm-4 col-form-label">Hora Saida</label>
                 <div class="col-sm-8">
-                    <input type="text" th:field="*{horaSaida}" class="form-control" id="horaSaidaPicker" placeholder="dd-MMM-yyyy HH:mm" />
+                    <input type="text" th:field="*{horaSaida}" class="form-control" id="horaSaidaPicker" placeholder="HH:mm" />
                 </div>
 
             </div>
             <div class="form-group row">
 
-                <label class="col-sm4 col-form-label">Cidade Destino</label>
+                <label class="col-sm-4 col-form-label">Cidade Origem</label>
                 <div class="col-sm-8">
-                    <select class="form-control" th:field="*{cidadeDestino.id}">
+                    <select class="form-control" th:field="*{cidadeOrigem.id}" id="cidadeOrigemSelect">
                         <option th:each="cidade : ${cidades}" th:value="${cidade.id}" th:text="${cidade.nomeCidade}"></option>
                     </select>
                 </div>
@@ -65,9 +65,9 @@
 
             <div class="form-group row">
 
-                <label class="col-sm4 col-form-label">Cidade Origem</label>
+                <label class="col-sm-4 col-form-label">Cidade Destino</label>
                 <div class="col-sm-8">
-                    <select class="form-control" th:field="*{cidadeOrigem.id}">
+                    <select class="form-control" th:field="*{cidadeDestino.id}" id="cidadeDestinoSelect">
                         <option th:each="cidade : ${cidades}" th:value="${cidade.id}" th:text="${cidade.nomeCidade}"></option>
                     </select>
                 </div>
@@ -76,7 +76,7 @@
 
             <div class="form-group row">
 
-                <label class="col-sm4 col-form-label">Valor Passagem</label>
+                <label class="col-sm-4 col-form-label">Valor Passagem</label>
                 <div class="col-sm-8">
                     <input type="text" th:field="*{valorPassagem}" class="form-control">
                 </div>
@@ -92,12 +92,51 @@
 </div>
 
 <script type="text/javascript">
-
     function cancelForm(){
-       window.location = "[[@{/passagem}]]"
+        window.location = "[[@{/passagem}]]"
     }
+
+    flatpickr("#dataSaidaPicker", {
+        dateFormat: "d-m-Y",
+        allowInput: true
+    });
+
+    flatpickr("#horaSaidaPicker", {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        allowInput: true
+    });
+
+    const veiculoSelect = document.getElementById('veiculoSelect');
+    const poltronaInput = document.getElementById('poltronaInput');
+
+    veiculoSelect.addEventListener('change', function () {
+        // Update the 'poltrona' input field based on the selected 'veiculo'
+        const selectedVeiculo = veiculos.find(veiculo => veiculo.id === parseInt(veiculoSelect.value));
+        if (selectedVeiculo) {
+            poltronaInput.max = selectedVeiculo.qtdPoltrnas;
+        }
+    });
+
+    const cidadeOrigemSelect = document.getElementById('cidadeOrigemSelect');
+    const cidadeDestinoSelect = document.getElementById('cidadeDestinoSelect');
+
+    cidadeOrigemSelect.addEventListener('change', function () {
+        // Prevent selecting the same 'cidadeOrigem' and 'cidadeDestino'
+        if (cidadeOrigemSelect.value === cidadeDestinoSelect.value) {
+            alert("Cidade Origem e Cidade Destino não podem ser iguais.");
+            cidadeOrigemSelect.value = '';
+        }
+    });
+
+    cidadeDestinoSelect.addEventListener('change', function () {
+        // Prevent selecting the same 'cidadeOrigem' and 'cidadeDestino'
+        if (cidadeDestinoSelect.value === cidadeOrigemSelect.value) {
+            alert("Cidade Origem e Cidade Destino não podem ser iguais.");
+            cidadeDestinoSelect.value = '';
+        }
+    });
 </script>
-
-
 </body>
 </html>

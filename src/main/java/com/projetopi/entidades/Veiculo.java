@@ -10,25 +10,21 @@ public class Veiculo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private int id;
     private String numero;
     private String motorista;
     private String placa;
     private String modelo;
     private String dataCompra;
-    private Integer qtdPoltrnas;
+    private int qtdPoltrnas;
 
-    public void decrementPoltrona() {
-        if (qtdPoltrnas > 0) {
-            qtdPoltrnas--;
-        }
-    }
+
 
     public Veiculo() {
     }
 
-    public Veiculo(Integer id, String numero, String motorista, String placa, String modelo, String dataCompra,
-                   Integer qtdPoltrnas) {
+    public Veiculo(int id, String numero, String motorista, String placa, String modelo, String dataCompra,
+                   int qtdPoltrnas) {
         this.id = id;
         this.numero = numero;
         this.motorista = motorista;
@@ -39,11 +35,11 @@ public class Veiculo {
     }
 
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -87,17 +83,25 @@ public class Veiculo {
         this.dataCompra = dataCompra;
     }
 
-    public Integer getQtdPoltrnas() {
+    public int getQtdPoltrnas() {
         return qtdPoltrnas;
     }
 
-    public void setQtdPoltrnas(Integer qtdPoltrnas) {
+    public void setQtdPoltrnas(int qtdPoltrnas) {
         this.qtdPoltrnas = qtdPoltrnas;
     }
 
     @Override
     public String toString() {
-        return modelo; //
+        return "Veiculo{" +
+                "id=" + id +
+                ", numero='" + numero + '\'' +
+                ", motorista='" + motorista + '\'' +
+                ", placa='" + placa + '\'' +
+                ", modelo='" + modelo + '\'' +
+                ", dataCompra=" + dataCompra +
+                ", qtdPoltrnas=" + qtdPoltrnas +
+                '}';
     }
 
     @Override

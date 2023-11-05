@@ -31,16 +31,16 @@
             </tr>
             </thead>
             <tbody>
-            <th:block th:each="passagem : ${listPassagem}">
+            <th:block th:each="passagem : ${passagemList}">
                 <tr>
-                    <td>[[${users.getIdPassagem()}]]</td>
-                    <td>[[${users.getVeiculo()}]]</td>
-                    <td>[[${users.getPoltrona()}]]</td>
-                    <td>[[${users.getDataSaida()}]]</td>
-                    <td>[[${users.getHoraSaida()}]]</td>
-                    <td>[[${users.getCidadeDestino()}]]</td>
-                    <td>[[${users.getCidadeOrigem()}]]</td>
-                    <td>[[${users.getValorPassagem()}]]</td>
+                    <td>[[${passagem.getIdPassagem()}]]</td>
+                    <td>[[${passagem.getVeiculo().getModelo()}]]</td>
+                    <td>[[${passagem.getPoltrona()}]]</td>
+                    <td>[[${passagem.getDataSaida()}]]</td>
+                    <td>[[${passagem.getHoraSaida()}]]</td>
+                    <td>[[${passagem.getCidadeDestino().getNomeCidade()}]]</td>
+                    <td>[[${passagem.getCidadeOrigem().getNomeCidade()}]]</td>
+                    <td>[[${passagem.getValorPassagem()}]]</td>
                     <td>
                         <a class="h4 mr-3" th:href="@{'/passagem/edit/' + ${passagem.getIdPassagem}}">Editar</a>
                         <a class="h4" th:href="@{'/passagem/delete/' + ${passagem.getIdPassagem}}">Deletar</a>

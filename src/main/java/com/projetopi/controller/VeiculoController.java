@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -64,13 +63,6 @@ public class VeiculoController {
             ra.addFlashAttribute("messagee", e.getMessage());
         }
         return "redirect:/veiculo";
-    }
-
-    @PostMapping("/veiculo/search")
-    public String searchVeiculoByNumero(@RequestParam("searchNumero") String searchNumero, Model model) {
-        List<Veiculo> searchResult = service.searchByNumero(searchNumero);
-        model.addAttribute("listVeiculo", searchResult);
-        return "veiculo";
     }
 
 }

@@ -1,8 +1,8 @@
 package com.projetopi.controller;
 
 import com.projetopi.entidades.Cidade;
-import com.projetopi.entidades.CidadeNotFoundException;
 import com.projetopi.entidades.UserNotFoundException;
+import com.projetopi.entidades.CidadeNotFoundException;
 import com.projetopi.services.CidadeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -67,13 +66,6 @@ public class CidadeController {
             ra.addFlashAttribute("message", e.getMessage());
         }
         return "redirect:/cidade";
-    }
-
-    @PostMapping("/cidade/search")
-    public String searchNomeCidadeByName(@RequestParam("searchNomeCidade") String searchNomeCidade, Model model) {
-        List<Cidade> searchResult = service.searchByNomeCidade(searchNomeCidade);
-        model.addAttribute("listCidade", searchResult);
-        return "cidade";
     }
 
 }

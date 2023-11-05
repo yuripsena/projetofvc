@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <title>[[${pageTitle}]]</title>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        flatpickr("#dataCompraPicker", {
+        dateFormat: "dd-MM-yyyy", // Specify the date format
+    });
+    </script>
 </head>
 <body>
 
@@ -54,7 +61,7 @@
 
                 <label class="col-sm4 col-form-label">Data da Compra</label>
                 <div class="col-sm-8">
-                    <input type="text" th:field="*{dataCompra}" class="form-control">
+                    <input type="text" th:field="*{dataCompra}" class="form-control" id="dataCompraPicker" placeholder="dd-MM-yyyy">
                 </div>
 
             </div>

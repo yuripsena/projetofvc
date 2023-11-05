@@ -1,7 +1,7 @@
 package com.projetopi.entidades;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Pattern;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.Objects;
@@ -10,28 +10,53 @@ import java.util.Objects;
 @Table(name = "passagem")
 public class Passagem {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idPassagem;
+
+    @ManyToOne
+    @JoinColumn(name = "veiculo_id")
+    private Veiculo veiculo;
+
+    private int poltrona;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd-MM-yyyy") // Specify the date format
+    private Date dataSaida;
+
+    private String horaSaida;
+    @ManyToOne
+    @JoinColumn(name = "cidadeOrigem_id")
+    private Cidade cidadeOrigem;
+    @ManyToOne
+    @JoinColumn(name = "cidadeDestino_id")
+    private Cidade cidadeDestino;
+
+    private float valorPassagem;
+
+    @Column
+    private boolean vendida;
+
+    public Passagem(int idPassagem, Veiculo veiculo, int poltrona, Date dataSaida, String horaSaida, Cidade cidadeOrigem, Cidade cidadeDestino, float valorPassagem, boolean vendida) {
+        this.idPassagem = idPassagem;
+        this.veiculo = veiculo;
+        this.poltrona = poltrona;
+        this.dataSaida = dataSaida;
+        this.horaSaida = horaSaida;
+        this.cidadeOrigem = cidadeOrigem;
+        this.cidadeDestino = cidadeDestino;
+        this.valorPassagem = valorPassagem;
+        this.vendida = vendida;
+    }
+
     public Passagem() {
 
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Passagem passagem = (Passagem) o;
-        return poltrona == passagem.poltrona && Float.compare(valorPassagem, passagem.valorPassagem) == 0 && Objects.equals(idPassagem, passagem.idPassagem) && Objects.equals(veiculo, passagem.veiculo) && Objects.equals(dataSaida, passagem.dataSaida) && Objects.equals(horaSaida, passagem.horaSaida) && Objects.equals(cidadeOrigem, passagem.cidadeOrigem) && Objects.equals(cidadeDestino, passagem.cidadeDestino);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idPassagem, veiculo, poltrona, dataSaida, horaSaida, cidadeOrigem, cidadeDestino, valorPassagem);
-    }
-
-    public Integer getIdPassagem() {
+    public int getIdPassagem() {
         return idPassagem;
     }
 
-    public void setIdPassagem(Integer idPassagem) {
+    public void setIdPassagem(int idPassagem) {
         this.idPassagem = idPassagem;
     }
 
@@ -91,9 +116,26 @@ public class Passagem {
         this.valorPassagem = valorPassagem;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idPassagem;
+    public boolean isVendida() {
+        return vendida;
+    }
+
+    public void setVendida(boolean vendida) {
+        this.vendida = vendida;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Passagem passagem = (Passagem) o;
+        return idPassagem == passagem.idPassagem && poltrona == passagem.poltrona && vendida == passagem.vendida && Objects.equals(veiculo, passagem.veiculo) && Objects.equals(dataSaida, passagem.dataSaida) && Objects.equals(horaSaida, passagem.horaSaida) && Objects.equals(cidadeOrigem, passagem.cidadeOrigem) && Objects.equals(cidadeDestino, passagem.cidadeDestino) && Objects.equals(valorPassagem, passagem.valorPassagem);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idPassagem, veiculo, poltrona, dataSaida, horaSaida, cidadeOrigem, cidadeDestino, valorPassagem, vendida);
+    }
 
     @Override
     public String toString() {
@@ -106,42 +148,10 @@ public class Passagem {
                 ", cidadeOrigem=" + cidadeOrigem +
                 ", cidadeDestino=" + cidadeDestino +
                 ", valorPassagem=" + valorPassagem +
+                ", vendida=" + vendida +
                 '}';
     }
-
-    @ManyToOne
-    @JoinColumn(name = "veiculo_id")
-    private Veiculo veiculo;
-
-    private int poltrona;
-
-    @Temporal(TemporalType.DATE)
-    @Pattern(regexp = "dd-MM-yyyy", message = "Date format should be dd-MM-yyyy")
-    private Date dataSaida;
-    private String horaSaida;
-
-    @ManyToOne
-    @JoinColumn(name = "cidade_origem_id")
-    private Cidade cidadeOrigem;
-
-    @ManyToOne
-    @JoinColumn(name = "cidade_destino_id")
-    private Cidade cidadeDestino;
-
-    private float valorPassagem;
-
-    public void decrementPoltrona() {
-        veiculo.decrementPoltrona();
-    }
-
-    public Passagem(Integer idPassagem, Veiculo veiculo, int poltrona, Date dataSaida, String horaSaida, Cidade cidadeOrigem, Cidade cidadeDestino, float valorPassagem) {
-        this.idPassagem = idPassagem;
-        this.veiculo = veiculo;
-        this.poltrona = poltrona;
-        this.dataSaida = dataSaida;
-        this.horaSaida = horaSaida;
-        this.cidadeOrigem = cidadeOrigem;
-        this.cidadeDestino = cidadeDestino;
-        this.valorPassagem = valorPassagem;
-    }
 }
+
+
+
