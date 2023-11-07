@@ -42,4 +42,8 @@ public class VeiculoService {
         repo.deleteById(id);
     }
 
+    public List<Veiculo> searchByNumero(String numero) {
+        return repo.findByNumeroContaining(numero);
+    }
+
 }

@@ -11,6 +11,7 @@ public class Veiculo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @Column(unique = true)
     private String numero;
     private String motorista;
     private String placa;
