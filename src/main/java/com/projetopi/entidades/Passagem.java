@@ -14,7 +14,7 @@ public class Passagem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idPassagem;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "veiculo_id")
     private Veiculo veiculo;
 
@@ -24,10 +24,11 @@ public class Passagem {
     private Date dataSaida;
 
     private String horaSaida;
-    @ManyToOne
+
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cidadeOrigem_id")
     private Cidade cidadeOrigem;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cidadeDestino_id")
     private Cidade cidadeDestino;
 
