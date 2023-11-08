@@ -21,7 +21,7 @@
                 <label class="col-sm-4 col-form-label">Veiculo</label>
                 <div class="col-sm-8">
                     <select class="form-control" th:field="*{veiculo.id}" id="veiculoSelect">
-                        <option th:each="veiculo : ${veiculos}" th:value="${veiculo.qtdPoltrnas}" th:text="${veiculo.modelo}"></option>
+                        <option th:each="veiculo : ${veiculos}" th:value="${veiculo.id}" th:text="${veiculo.modelo}" th:attr="poltronas=${veiculo.qtdPoltrnas}"></option>
                     </select>
                 </div>
 
@@ -111,8 +111,8 @@
     const veiculoSelect = document.getElementById('veiculoSelect');
     const poltronaInput = document.getElementById('poltronaInput');
 
-    veiculoSelect.addEventListener('change', function (event) {
-        poltronaInput.value = event.target.value;
+   veiculoSelect.addEventListener('change', function (event) {
+        poltronaInput.value = event.target[event.target.selectedIndex].getAttribute('poltronas');
     });
 
     const cidadeOrigemSelect = document.getElementById('cidadeOrigemSelect');
